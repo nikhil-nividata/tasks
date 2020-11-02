@@ -1,0 +1,5 @@
+Task 1, Monday 1256 Nov 2 2020
+	Form
+		-Fields (TextField , TextArea, Select Box , Checkbox, RadioButtons, Email,)
+		-Validation
+		-Log to console on Submit

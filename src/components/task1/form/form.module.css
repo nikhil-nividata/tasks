@@ -1,0 +1,28 @@
+.formGrid {
+    height: 70vh;
+    background-color: rgba(128, 128, 128, 0.164);
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 5vh;
+    display: grid;
+    border: 1px solid rgba(190, 190, 190, 0.274);
+    border-radius: 15px;
+    grid-template-columns: 50% 50%;
+    row-gap: 20px;
+    align-content: center;
+}
+
+.input {
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.textInputField{
+    height: 20px;
+    padding: 0.4rem;
+    border-radius: 6px;
+    border: none;
+    width: 60%;
+}
