@@ -7,6 +7,11 @@ class RegFrom extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            isNameValid: true,
+            isEmailValid: true,
+            isDecriptionValid: true,
+            isCityValid: true,
+            isGenderValid: true,
             name: '',
             email: '',
             description: '',
@@ -56,21 +61,21 @@ class RegFrom extends Component {
         const mailRegex = RegExp(emailPattern)
         console.log(nameRegex.test(this.state.name));
         console.log(mailRegex.test(this.state.email));
-        if (!nameRegex.test(this.state.name)) {
-            alert('Please Enter a Valid Name')
+        if (!nameRegex.test(this.state.name) || !mailRegex.test(this.state.email) || this.state.city === 'Select a City' || this.state.gender === '') {
+            this.setState({
+                isNameValid: nameRegex.test(this.state.name),
+                isEmailValid: mailRegex.test(this.state.email),
+                isCityValid: !(this.state.city === 'Select a City'),
+                isGenderValid: !(this.state.gender === '')
+            })
             return
-        }
-        if (!mailRegex.test(this.state.email)) {
-            alert('Please Enter a Valid Email')
-            return
-        }
-        if (this.state.city === 'Select a City') {
-            alert('Please Select a City')
-            return
-        }
-        if (this.state.gender === '') {
-            alert('Please Select a Gender')
-            return
+        } else {
+            this.setState({
+                isNameValid: true,
+                isEmailValid: true,
+                isCityValid: true,
+                isGenderValid: true
+            })
         }
         console.log(this.state);
     }
@@ -82,7 +87,12 @@ class RegFrom extends Component {
             description,
             city,
             gender,
-            hobbies
+            hobbies,
+            isNameValid,
+            isEmailValid,
+            isDecriptionValid,
+            isCityValid,
+            isGenderValid
 
         } = this.state
         return (
@@ -92,36 +102,80 @@ class RegFrom extends Component {
                 className={styles.formGrid}>
                 <div className={styles.input}>
                     <label htmlFor="name">Name</label>
-                    <input
-                        required={true}
-                        onChange={this.handleChange}
-                        name="name"
-                        placeholder="Enter your name"
-                        className={styles.textInputField}
-                        value={name}
-                    />
+                    <div style={{ width: "65%" }}>
+                        <input
+                            style={{ width: "100%" }}
+                            required={true}
+                            onChange={this.handleChange}
+                            name="name"
+                            placeholder="Enter your name"
+                            className={styles.textInputField}
+                            value={name}
+                        />
+                        <p
+                            style={{
+                                fontSize: "10px",
+                                margin: '2px',
+                                color: 'red',
+                                display: isNameValid ? 'none' : 'block'
+                            }}
+                        >
+                            Name doesnt match the format
+                        </p>
+                    </div>
                 </div>
                 <div className={styles.input}>
                     <label htmlFor="email">Email</label>
-                    <input
-                        required={true}
-                        onChange={this.handleChange}
-                        name="email"
-                        placeholder="Enter your email"
-                        className={styles.textInputField}
-                        value={email}
-                    />
+                    <div style={{ width: "65%" }}>
+                        <input
+                            style={{ width: "100%" }}
+                            required={true}
+                            onChange={this.handleChange}
+                            name="email"
+                            placeholder="Enter your email"
+                            className={styles.textInputField}
+                            value={email}
+                        />
+
+                        <p
+                            style={{
+                                fontSize: "10px",
+                                margin: '2px',
+                                color: 'red',
+                                display: isEmailValid ? 'none' : 'block'
+                            }}
+                        >
+                            Email doesnt match the format
+                        </p>
+
+                    </div>
                 </div>
                 <div
                     style={{
                         gridColumn: "1 /span 2",
                         rowSpan: "1/span 3",
                     }}>
-                    <label
-                        style={{ marginLeft: "30px" }}
-                        htmlFor="description">
-                        Description
+
+
+                    <div>
+                        <label
+                            style={{ marginLeft: "30px" }}
+                            htmlFor="description">
+                            Description
                     </label>
+                        <p
+                            style={{
+                                fontSize: "10px",
+                                margin: '2px',
+                                marginLeft: '30px',
+                                color: 'red',
+                                display: isDecriptionValid ? 'none' : 'block'
+                            }}
+                        >
+                            Description doesnt match the format
+                        </p>
+                    </div>
+
                     <textarea
                         required={true}
                         onChange={this.handleChange}
@@ -142,11 +196,23 @@ class RegFrom extends Component {
                 </div>
 
                 <div className={styles.input}>
-
-                    <label
-                        htmlFor="city">
-                        Select a City
+                    <div>
+                        <label
+                            htmlFor="city">
+                            Select a City
                     </label>
+                        <p
+                            style={{
+                                fontSize: "10px",
+                                margin: '2px',
+                                color: 'red',
+                                display: isCityValid ? 'none' : 'block'
+                            }}
+                        >
+                            City is invalid
+                        </p>
+                    </div>
+
 
 
                     <select
@@ -205,6 +271,16 @@ class RegFrom extends Component {
                             value="female"
                             checked={gender === 'female'}
                         />
+                        <p
+                            style={{
+                                fontSize: "10px",
+                                margin: '2px',
+                                color: 'red',
+                                display: isGenderValid ? 'none' : 'block'
+                            }}
+                        >
+                            Select a Gender
+                        </p>
                     </div>
                     <div>
                         <label
