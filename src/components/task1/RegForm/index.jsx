@@ -1,8 +1,82 @@
 import React, { Component } from 'react'
 import styles from './form.module.css'
 
-export default class from extends Component {
+import { cities } from '../../../utilities'
+
+class RegFrom extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: '',
+            email: '',
+            description: '',
+            city: 'Select a City',
+            gender: '',
+            hobbies: [
+                {
+                    name: 'Music',
+                    isSelected: false
+                },
+                {
+                    name: 'Webseries',
+                    isSelected: false
+                },
+                {
+                    name: 'Coding',
+                    isSelected: false
+                },
+                {
+                    name: 'Reading',
+                    isSelected: false
+                }
+            ]
+        }
+    }
+
+    handleChange = (event) => {
+        const modified = {}
+        if (event.target.name === 'hobbies') {
+            const hobbies = [...this.state.hobbies]
+            hobbies.forEach(elem => {
+                if (elem.name === event.target.value)
+                    elem.isSelected = !elem.isSelected
+            })
+            modified[event.target.name] = hobbies
+        } else {
+            modified[event.target.name] = event.target.value
+        }
+        this.setState(modified)
+    }
+
+    submitHandler = (event) => {
+        event.preventDefault()
+        // const emailPattern = /[a-z]+([a-z]|[0-9])*@[a-z]+\.[a-z]+/i
+        // const mailRegex = RegExp(emailPattern)
+        // if (!mailRegex.exec(this.state.email)) {
+        //     alert('Please Enter a Valid Email')
+        //     return
+        // }
+        if (this.state.city === 'Select a City') {
+            alert('Please Select a City')
+            return
+        }
+        if (this.state.gender === '') {
+            alert('Please Select a Gender')
+            return
+        }
+        console.log(this.state);
+    }
+
+
     render() {
+        const { name,
+            email,
+            description,
+            city,
+            gender,
+            hobbies
+
+        } = this.state
         return (
             <form
                 method='none'
@@ -16,7 +90,8 @@ export default class from extends Component {
                         name="name"
                         placeholder="Enter your name"
                         className={styles.textInputField}
-                        value={this.state.name}
+                        value={name}
+                        pattern="[a-zA-Z]+"
                     />
                 </div>
                 <div className={styles.input}>
@@ -27,7 +102,8 @@ export default class from extends Component {
                         name="email"
                         placeholder="Enter your email"
                         className={styles.textInputField}
-                        value={this.state.email}
+                        value={email}
+                        pattern="[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,}"
                     />
                 </div>
                 <div
@@ -54,7 +130,8 @@ export default class from extends Component {
                             marginTop: "10px",
                             marginLeft: "25px"
                         }}
-                        value={this.state.description}
+                        value={description}
+                        maxLength="200"
                     />
                 </div>
 
@@ -68,7 +145,7 @@ export default class from extends Component {
 
                     <select
                         required={true}
-                        value={this.state.city}
+                        value={city}
                         onChange={this.handleChange}
                         name="city"
                         style={{
@@ -87,7 +164,7 @@ export default class from extends Component {
                             Select a City
                         </option>
                         {
-                            this.cities.map(
+                            cities.map(
                                 city => (
                                     <option
                                         key={city}
@@ -112,7 +189,7 @@ export default class from extends Component {
                             type="radio"
                             name="gender"
                             value="male"
-                            checked={this.state.gender === 'male'}
+                            checked={gender === 'male'}
                         />
                         <label htmlFor="female">Female</label>
                         <input
@@ -120,7 +197,7 @@ export default class from extends Component {
                             type="radio"
                             name="gender"
                             value="female"
-                            checked={this.state.gender === 'female'}
+                            checked={gender === 'female'}
                         />
                     </div>
                     <div>
@@ -129,7 +206,7 @@ export default class from extends Component {
                             Hobbies:
                         </label><br />
                         {
-                            this.state.hobbies.map(
+                            hobbies.map(
                                 hobby => (
                                     <div>
                                         <input
@@ -166,85 +243,7 @@ export default class from extends Component {
             </form>
         )
     }
-
-    cities = [
-        'Vadodara',
-        'Ahmedabad',
-        'Bharuch',
-        'Gandhinagar',
-        'Delhi',
-        'Bombay',
-        'Bangalore'
-    ]
-
-    hobbies = [
-        'Music',
-        'Webseries',
-        'Coding',
-        'Reading'
-    ]
-
-    handleChange = (event) => {
-        const modified = {}
-        if (event.target.name === 'hobbies') {
-            const hobbies = [...this.state.hobbies]
-            hobbies.forEach(elem => {
-                if (elem.name === event.target.value)
-                    elem.isSelected = !elem.isSelected
-            })
-            modified[event.target.name] = hobbies
-        } else {
-            modified[event.target.name] = event.target.value
-        }
-        this.setState(modified)
-    }
-
-    submitHandler = (event) => {
-        event.preventDefault()
-        const emailPattern = /[a-z]+([a-z]|[0-9])*@[a-z]+\.[a-z]+/i
-        const mailRegex = RegExp(emailPattern)
-        if (!mailRegex.exec(this.state.email)) {
-            alert('Please Enter a Valid Email')
-            return
-        }
-        if (this.state.city === 'Select a City') {
-            alert('Please Select a City')
-            return
-        }
-        if (this.state.gender === '') {
-            alert('Please Select a Gender')
-            return
-        }
-        console.log(this.state);
-    }
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            name: '',
-            email: '',
-            description: '',
-            city: 'Select a City',
-            gender: '',
-            hobbies: [
-                {
-                    name: 'Music',
-                    isSelected: false
-                },
-                {
-                    name: 'Webseries',
-                    isSelected: false
-                },
-                {
-                    name: 'Coding',
-                    isSelected: false
-                },
-                {
-                    name: 'Reading',
-                    isSelected: false
-                }
-            ]
-        }
-    }
-
 }
+
+
+export default RegFrom
