@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Form from './components/task1/RegForm'
+import Form from './components/task1/RegFormFunctional'
 
 function App() {
   return (

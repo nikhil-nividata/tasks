@@ -82,7 +82,8 @@ class RegFrom extends Component {
 
 
     render() {
-        const { name,
+        const {
+            name,
             email,
             description,
             city,
