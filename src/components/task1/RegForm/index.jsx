@@ -50,12 +50,20 @@ class RegFrom extends Component {
 
     submitHandler = (event) => {
         event.preventDefault()
-        // const emailPattern = /[a-z]+([a-z]|[0-9])*@[a-z]+\.[a-z]+/i
-        // const mailRegex = RegExp(emailPattern)
-        // if (!mailRegex.exec(this.state.email)) {
-        //     alert('Please Enter a Valid Email')
-        //     return
-        // }
+        const emailPattern = /[a-z]+([a-z]|[0-9])*@[a-z]+\.[a-z]{2,}$/i
+        const namePattern = /[a-z]+$/
+        const nameRegex = RegExp(namePattern)
+        const mailRegex = RegExp(emailPattern)
+        console.log(nameRegex.test(this.state.name));
+        console.log(mailRegex.test(this.state.email));
+        if (!nameRegex.test(this.state.name)) {
+            alert('Please Enter a Valid Name')
+            return
+        }
+        if (!mailRegex.test(this.state.email)) {
+            alert('Please Enter a Valid Email')
+            return
+        }
         if (this.state.city === 'Select a City') {
             alert('Please Select a City')
             return
@@ -91,7 +99,6 @@ class RegFrom extends Component {
                         placeholder="Enter your name"
                         className={styles.textInputField}
                         value={name}
-                        pattern="[a-zA-Z]+"
                     />
                 </div>
                 <div className={styles.input}>
@@ -103,7 +110,6 @@ class RegFrom extends Component {
                         placeholder="Enter your email"
                         className={styles.textInputField}
                         value={email}
-                        pattern="[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,}"
                     />
                 </div>
                 <div
