@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import Form from './components/task1/RegFormFunctional'
+import Weather from './components/task2/Weather'
 
 function App() {
   return (
     <div className="App">
-      <Form />
+      <Weather />
     </div>
   );
 }

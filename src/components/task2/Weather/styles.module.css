@@ -1,0 +1,22 @@
+.weatherBox {
+    height: 60vh;
+    width: 80%;
+    margin-left: 7%;
+    margin-top: 12vh;
+    padding: 3%;
+    text-align: center;
+}
+
+.cityInput {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid rgba(128, 128, 128, 0.507);
+}
+
+.button {
+    padding: 10px;
+    font-size: 1rem;
+    background-color: rgba(38, 38, 222, 1);
+    color: white;
+    margin-left: 20px;
+}
