@@ -4,7 +4,21 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import isBetween from 'dayjs/plugin/isBetween'
+import Sunny from '../../../../src/assets/sunny.gif'
+import Rainy from '../../../../src/assets/rainy.gif'
+import Clouds from '../../../../src/assets/cloudy.gif'
+import Mist from '../../../../src/assets/mist.gif'
+import Haze from '../../../../src/assets/haze.gif'
+import Clear from '../../../../src/assets/clear.gif'
 
+const gifs = {
+    'Sunny': Sunny,
+    'Rain': Rainy,
+    'Clouds': Clouds,
+    'Mist': Mist,
+    'Haze': Haze,
+    'Clear': Clear
+}
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -80,7 +94,7 @@ class WeatherData extends Component {
                                     dayjs.unix(
                                         weatherData.sys.sunset + weatherData.timezone
                                     )
-                                ) ? 'rgb(235, 227, 82)' : 'rgb(0, 51, 237)',
+                                ) ? 'rgb(235, 227, 82)' : 'rgb(35, 13, 112)',
                     color: isFetching || weatherData === 'NODATA' ? 'white' :
                         error !== '' ? 'red' :
                             dayjs((new Date()).getTime() + weatherData.timezone * 1000)
@@ -116,13 +130,18 @@ class WeatherData extends Component {
                                 weatherData === 'NODATA' ? '' : (
                                     <div>
                                         <h2>
-                                            {weatherData.name}
+                                            {weatherData.name + ` ${dayjs((new Date()).getTime() + weatherData.timezone * 1000).utc().format('HH:mm')}`}
                                         </h2>
+
                                         <div style={{
                                             display: "flex",
                                             alignContent: 'center',
                                             justifyContent: 'center'
                                         }}>
+                                            <h4>
+                                                {weatherData.weather[0].main}
+                                            </h4>
+
                                             <img
                                                 src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
                                                 style={{
@@ -134,9 +153,9 @@ class WeatherData extends Component {
                                             {
 
                                                 (weatherData.main.temp_max === weatherData.main.temp_min) ?
-                                                    (<h2> {(weatherData.main.temp_max - 273).toFixed(2)} </h2>) :
-                                                    (<h2> {(weatherData.main.temp_min - 273).toFixed(2)} &#8451; -
-                                                        {(weatherData.main.temp_max - 273).toFixed(2)} &#8451; </h2>)
+                                                    (<h4> {(weatherData.main.temp_max - 273).toFixed(2)} </h4>) :
+                                                    (<h4> {(weatherData.main.temp_min - 273).toFixed(2)} &#8451; -
+                                                        {(weatherData.main.temp_max - 273).toFixed(2)} &#8451; </h4>)
 
                                             }
                                         </div>
@@ -171,6 +190,12 @@ class WeatherData extends Component {
                                                 {`Windspeed ${(weatherData.wind.speed * 3.6).toFixed(2)} km/hr`}
                                             </h4>
                                         </div>
+                                        <img
+                                            src={gifs[weatherData.weather[0].main]}
+                                            style={{
+                                                height: "25vh"
+                                            }}
+                                            alt="" />
                                     </div>
                                 )
                     }
